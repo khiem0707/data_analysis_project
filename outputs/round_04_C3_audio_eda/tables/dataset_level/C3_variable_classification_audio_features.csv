@@ -1,0 +1,13 @@
+﻿Variable,Meaning,Variable_Nature,Subtype,Role
+slice_file_name,Tên file âm thanh,Qualitative,Nominal,Identifier
+fold,Nhóm fold dùng cho chia dữ liệu,Qualitative,Nominal,Split group
+class,Tên lớp âm thanh,Qualitative,Nominal,Target label
+duration_audio,Thời lượng thực tế của file âm thanh,Quantitative,Continuous,Audio feature
+sample_rate,Tần số lấy mẫu,Quantitative,Discrete,Technical feature
+rms_mean,Năng lượng âm thanh trung bình,Quantitative,Continuous,Energy feature
+zcr_mean,Zero Crossing Rate trung bình,Quantitative,Continuous,Temporal feature
+spectral_centroid_mean,Tần số trung tâm trung bình,Quantitative,Continuous,Spectral feature
+spectral_bandwidth_mean,Độ rộng phổ trung bình,Quantitative,Continuous,Spectral feature
+spectral_rolloff_mean,Spectral rolloff trung bình,Quantitative,Continuous,Spectral feature
+mfcc_1_mean ... mfcc_13_mean,Trung bình các hệ số MFCC,Quantitative,Continuous,Cepstral feature
+mfcc_1_std ... mfcc_13_std,Độ lệch chuẩn các hệ số MFCC,Quantitative,Continuous,Cepstral feature

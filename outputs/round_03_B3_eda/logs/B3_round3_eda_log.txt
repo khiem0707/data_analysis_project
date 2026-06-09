@@ -1,0 +1,64 @@
+B3 Bike Sharing Dataset - Round 3 EDA and Time-Series Transformation
+================================================================================
+Run time: 2026-06-02 00:30:44.785657
+Raw day path: data\raw\B3_bike_sharing\day.csv
+Raw hour path: data\raw\B3_bike_sharing\hour.csv
+Round output directory: outputs\round_03_B3_eda
+
+RAW DATA SUMMARY
+--------------------------------------------------------------------------------
+day.csv shape: 731 rows, 16 columns
+hour.csv shape: 17379 rows, 18 columns after datetime creation
+hour.csv datetime range: 2011-01-01 00:00:00 to 2012-12-31 23:00:00
+Missing values in hour.csv: 0
+Duplicate rows in hour.csv: 0
+
+TIME INDEX CHECK
+--------------------------------------------------------------------------------
+                   Item               Value
+         Start datetime 2011-01-01 00:00:00
+           End datetime 2012-12-31 23:00:00
+Expected hourly records               17544
+Observed hourly records               17379
+ Missing hourly records                 165
+
+TARGET CNT RAW SUMMARY
+--------------------------------------------------------------------------------
+count    17379.000000
+mean       189.463088
+std        181.387599
+min          1.000000
+25%         40.000000
+50%        142.000000
+75%        281.000000
+max        977.000000
+
+TIME-SERIES TRANSFORMATION STEPS
+--------------------------------------------------------------------------------
+                                           Step                                                                               Description
+                                Create datetime                                  Tạo datetime từ dteday và hr để dùng làm trục thời gian.
+                Check missing hourly timestamps                                   So sánh số mốc giờ kỳ vọng và số mốc giờ quan sát được.
+                Reindex to full hourly timeline                             Bổ sung các mốc giờ còn thiếu trong toàn bộ khoảng thời gian.
+     Linear interpolation for numeric variables              Nội suy tuyến tính cho temp, atemp, hum, windspeed, casual, registered, cnt.
+Forward/backward fill for categorical variables          Dùng ffill/bfill cho season, yr, mnth, holiday, weekday, workingday, weathersit.
+                           Create log transform                      Tạo cnt_log1p = log(1 + cnt_interpolated) để giảm độ lệch phân phối.
+                            Create differencing                               Tạo cnt_diff_1 để xem biến động giữa hai mốc giờ liên tiếp.
+                            Create lag features                                     Tạo lag_1, lag_24, lag_168 để phục vụ mô hình dự báo.
+                        Create rolling features Tạo rolling_mean_24, rolling_std_24, rolling_mean_168 để mô tả xu hướng ngắn hạn và tuần.
+
+TRANSFORMED DATA SUMMARY
+--------------------------------------------------------------------------------
+Transformed hourly shape: 17544 rows, 43 columns
+Number of rows observed in original data: 17379
+Number of rows added by full hourly reindex: 165
+Missing cnt_interpolated after preprocessing: 0
+
+OUTPUT FILES
+--------------------------------------------------------------------------------
+Raw tables: outputs\round_03_B3_eda\tables\raw
+Transformed tables: outputs\round_03_B3_eda\tables\transformed
+Comparison tables: outputs\round_03_B3_eda\tables\comparison
+Raw figures: outputs\round_03_B3_eda\figures\raw
+Transformed figures: outputs\round_03_B3_eda\figures\transformed
+Transformed data: outputs\round_03_B3_eda\data\B3_hour_transformed_time_features.csv
+Daily aggregated data: outputs\round_03_B3_eda\data\B3_daily_aggregated_from_hour.csv

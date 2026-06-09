@@ -1,0 +1,17 @@
+﻿Column,Unique_Count
+yr,2
+holiday,2
+workingday,2
+weathersit,3
+season,4
+weekday,7
+mnth,12
+temp,499
+hum,595
+casual,606
+windspeed,650
+registered,679
+atemp,690
+cnt,696
+dteday,731
+instant,731

@@ -1,0 +1,13 @@
+﻿Column,Data_Type
+slice_file_name,object
+fsID,int64
+start,float64
+end,float64
+salience,int64
+fold,int64
+classID,int64
+class,object
+duration_metadata,float64
+expected_audio_path,object
+file_exists,bool
+found_audio_path,object

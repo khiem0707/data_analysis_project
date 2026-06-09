@@ -1,0 +1,47 @@
+A3 Customer Personality Analysis - Round 2 EDA and Preprocessing
+======================================================================
+Run time: 2026-06-01 23:23:43.405508
+Raw path: data\raw\A3_customer_personality\marketing_campaign.csv
+Round output directory: outputs\round_02_A3_eda
+
+RAW DATA SUMMARY
+----------------------------------------------------------------------
+Raw shape after derived features: 2240 rows, 36 columns
+Missing Income before preprocessing: 24
+Response distribution:
+Response
+0    1906
+1     334
+
+DERIVED FEATURES
+----------------------------------------------------------------------
+Created: Age, Customer_Tenure_Days, Total_Spending, Total_Children, Total_Purchases, Total_Accepted_Campaigns
+
+PREPROCESSING STEPS
+----------------------------------------------------------------------
+                       Step                                                                                                  Description
+      Impute missing Income                                                       Điền 24 giá trị thiếu của Income bằng median = 51381.5
+                 Create Age                                                          Tạo Age từ Year_Birth và năm tham chiếu của dataset
+Create Customer_Tenure_Days                                                            Tính số ngày gắn bó của khách hàng từ Dt_Customer
+      Create Total_Spending Cộng các biến chi tiêu MntWines, MntFruits, MntMeatProducts, MntFishProducts, MntSweetProducts, MntGoldProds
+      Create Total_Children                                                                                     Cộng Kidhome và Teenhome
+     Create Total_Purchases                     Cộng các biến NumDealsPurchases, NumWebPurchases, NumCatalogPurchases, NumStorePurchases
+  Group rare Marital_Status                                                                          Gộp Alone, Absurd, YOLO thành Other
+      Drop constant columns                                                          Xóa các cột hằng số: ['Z_CostContact', 'Z_Revenue']
+        Cap outliers by IQR                                                   Cắt giá trị outliers về lower/upper bound theo quy tắc IQR
+     Create scaled features                                    Tạo thêm các biến z-score và min-max cho vòng clustering/machine learning
+
+CLEANED DATA SUMMARY
+----------------------------------------------------------------------
+Cleaned shape: 2240 rows, 35 columns
+Missing Income after preprocessing: 0
+Constant columns removed: ['Z_CostContact', 'Z_Revenue']
+
+OUTPUT FILES
+----------------------------------------------------------------------
+Raw tables: outputs\round_02_A3_eda\tables\raw
+Cleaned tables: outputs\round_02_A3_eda\tables\cleaned
+Comparison tables: outputs\round_02_A3_eda\tables\comparison
+Raw figures: outputs\round_02_A3_eda\figures\raw
+Cleaned figures: outputs\round_02_A3_eda\figures\cleaned
+Cleaned data: outputs\round_02_A3_eda\data\A3_cleaned.csv

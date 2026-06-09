@@ -1,0 +1,11 @@
+﻿Class,Sample_File,Fold,Audio_Path,Waveform_Figure,Mel_Spectrogram_Figure,Error
+air_conditioner,127873-0-0-0.wav,1,data\raw\C3_urbansound8k\fold1\127873-0-0-0.wav,C3_sample_air_conditioner_waveform.png,C3_sample_air_conditioner_mel_spectrogram.png,
+car_horn,156194-1-0-0.wav,1,data\raw\C3_urbansound8k\fold1\156194-1-0-0.wav,C3_sample_car_horn_waveform.png,C3_sample_car_horn_mel_spectrogram.png,
+children_playing,105415-2-0-1.wav,1,data\raw\C3_urbansound8k\fold1\105415-2-0-1.wav,C3_sample_children_playing_waveform.png,C3_sample_children_playing_mel_spectrogram.png,
+dog_bark,101415-3-0-2.wav,1,data\raw\C3_urbansound8k\fold1\101415-3-0-2.wav,C3_sample_dog_bark_waveform.png,C3_sample_dog_bark_mel_spectrogram.png,
+drilling,14113-4-0-0.wav,1,data\raw\C3_urbansound8k\fold1\14113-4-0-0.wav,C3_sample_drilling_waveform.png,C3_sample_drilling_mel_spectrogram.png,
+engine_idling,103258-5-0-0.wav,1,data\raw\C3_urbansound8k\fold1\103258-5-0-0.wav,C3_sample_engine_idling_waveform.png,C3_sample_engine_idling_mel_spectrogram.png,
+gun_shot,102305-6-0-0.wav,1,data\raw\C3_urbansound8k\fold1\102305-6-0-0.wav,C3_sample_gun_shot_waveform.png,C3_sample_gun_shot_mel_spectrogram.png,
+jackhammer,103074-7-0-0.wav,1,data\raw\C3_urbansound8k\fold1\103074-7-0-0.wav,C3_sample_jackhammer_waveform.png,C3_sample_jackhammer_mel_spectrogram.png,
+siren,106905-8-0-0.wav,1,data\raw\C3_urbansound8k\fold1\106905-8-0-0.wav,C3_sample_siren_waveform.png,C3_sample_siren_mel_spectrogram.png,
+street_music,108041-9-0-11.wav,1,data\raw\C3_urbansound8k\fold1\108041-9-0-11.wav,C3_sample_street_music_waveform.png,C3_sample_street_music_mel_spectrogram.png,

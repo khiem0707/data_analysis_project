@@ -1,0 +1,10 @@
+﻿Variable,Meaning,Python_Data_Type,Variable_Nature,Subtype,Role
+slice_file_name,Tên file âm thanh,object,Qualitative,Nominal,Identifier
+fsID,ID nguồn âm thanh gốc,int,Quantitative,Discrete,Identifier / group reference
+start,Thời điểm bắt đầu đoạn âm thanh trong file gốc,float,Quantitative,Continuous,Metadata feature
+end,Thời điểm kết thúc đoạn âm thanh trong file gốc,float,Quantitative,Continuous,Metadata feature
+duration_metadata,"Thời lượng đoạn âm thanh, tính bằng end - start",float,Quantitative,Continuous,Derived feature
+salience,Mức độ nổi bật của âm thanh foreground/background,int,Qualitative,Ordinal/Binary-like,Metadata feature
+fold,Nhóm fold dùng cho chia dữ liệu/thực nghiệm,int,Qualitative,Nominal,Split group
+classID,Mã số lớp âm thanh,int,Qualitative,Nominal encoded as integer,Label code
+class,Tên lớp âm thanh,object,Qualitative,Nominal,Target label

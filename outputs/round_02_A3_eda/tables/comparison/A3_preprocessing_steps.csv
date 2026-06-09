@@ -1,0 +1,11 @@
+﻿Step,Description
+Impute missing Income,Điền 24 giá trị thiếu của Income bằng median = 51381.5
+Create Age,Tạo Age từ Year_Birth và năm tham chiếu của dataset
+Create Customer_Tenure_Days,Tính số ngày gắn bó của khách hàng từ Dt_Customer
+Create Total_Spending,"Cộng các biến chi tiêu MntWines, MntFruits, MntMeatProducts, MntFishProducts, MntSweetProducts, MntGoldProds"
+Create Total_Children,Cộng Kidhome và Teenhome
+Create Total_Purchases,"Cộng các biến NumDealsPurchases, NumWebPurchases, NumCatalogPurchases, NumStorePurchases"
+Group rare Marital_Status,"Gộp Alone, Absurd, YOLO thành Other"
+Drop constant columns,"Xóa các cột hằng số: ['Z_CostContact', 'Z_Revenue']"
+Cap outliers by IQR,Cắt giá trị outliers về lower/upper bound theo quy tắc IQR
+Create scaled features,Tạo thêm các biến z-score và min-max cho vòng clustering/machine learning

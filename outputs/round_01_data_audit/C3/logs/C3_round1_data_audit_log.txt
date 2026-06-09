@@ -1,0 +1,76 @@
+C3 UrbanSound8K - Round 1 Data Audit
+============================================================
+Run time: 2026-06-01 23:07:18.624800
+Raw dir: data\raw\C3_urbansound8k
+Metadata path: data\raw\C3_urbansound8k\UrbanSound8K.csv
+Audio base dir: data\raw\C3_urbansound8k
+
+METADATA SUMMARY
+------------------------------------------------------------
+Shape: 8732 rows, 12 columns including derived audit columns
+Original metadata columns: ['slice_file_name', 'fsID', 'start', 'end', 'salience', 'fold', 'classID', 'class']
+Duplicate rows by slice_file_name and fold: 0
+
+Missing values:
+             Column  Missing_Count  Missing_Rate
+    slice_file_name              0           0.0
+               fsID              0           0.0
+              start              0           0.0
+                end              0           0.0
+           salience              0           0.0
+               fold              0           0.0
+            classID              0           0.0
+              class              0           0.0
+  duration_metadata              0           0.0
+expected_audio_path              0           0.0
+        file_exists              0           0.0
+   found_audio_path              0           0.0
+
+AUDIO FILE CHECK
+------------------------------------------------------------
+                                      Item                    Value
+                      Audio base directory data\raw\C3_urbansound8k
+                 Number of wav files found                     8732
+                   Number of metadata rows                     8732
+Number of metadata rows with existing file                     8732
+ Number of metadata rows with missing file                        0
+
+CLASS DISTRIBUTION
+------------------------------------------------------------
+           Class  Count  Rate_Percent
+        dog_bark   1000     11.452130
+children_playing   1000     11.452130
+ air_conditioner   1000     11.452130
+    street_music   1000     11.452130
+      jackhammer   1000     11.452130
+   engine_idling   1000     11.452130
+        drilling   1000     11.452130
+           siren    929     10.639029
+        car_horn    429      4.912964
+        gun_shot    374      4.283097
+
+FOLD DISTRIBUTION
+------------------------------------------------------------
+ Fold  Count  Rate_Percent
+    1    873      9.997710
+    2    888     10.169492
+    3    925     10.593220
+    4    990     11.337609
+    5    936     10.719194
+    6    823      9.425103
+    7    838      9.596885
+    8    806      9.230417
+    9    816      9.344938
+   10    837      9.585433
+
+DURATION FROM METADATA SUMMARY
+------------------------------------------------------------
+Statistic       Value
+    count 8732.000000
+     mean    3.607904
+      std    0.973570
+      min    0.054517
+      25%    4.000000
+      50%    4.000000
+      75%    4.000000
+      max    4.000000

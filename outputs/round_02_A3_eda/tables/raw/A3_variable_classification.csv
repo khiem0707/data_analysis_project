@@ -1,0 +1,13 @@
+﻿Variable,Meaning,Python_Data_Type,Variable_Nature,Subtype,Role
+ID,Mã định danh khách hàng,int64,Qualitative,Identifier,Không dùng trực tiếp để phân tích thống kê
+Year_Birth,Năm sinh của khách hàng,int64,Quantitative,Discrete,Biến gốc để tạo Age
+Age,Tuổi khách hàng tại thời điểm tham chiếu của dataset,int64,Quantitative,Discrete,Biến phân tích chính
+Education,Trình độ học vấn,object,Qualitative,Nominal/Ordinal,"Biến định tính, dùng lập bảng tần suất"
+Marital_Status,Tình trạng hôn nhân,object,Qualitative,Nominal,"Biến định tính, dùng lập bảng tần suất"
+Income,Thu nhập hằng năm của khách hàng,float64,Quantitative,Continuous,"Biến phân tích chính, có missing cần xử lý"
+Kidhome,Số trẻ nhỏ trong hộ gia đình,int64,Quantitative,Discrete,Biến mô tả cấu trúc gia đình
+Teenhome,Số trẻ vị thành niên trong hộ gia đình,int64,Quantitative,Discrete,Biến mô tả cấu trúc gia đình
+Recency,Số ngày từ lần mua gần nhất,int64,Quantitative,Discrete,Biến hành vi khách hàng
+Total_Spending,Tổng chi tiêu trên các nhóm sản phẩm,int64,Quantitative,Continuous/Discrete,Biến dẫn xuất quan trọng cho phân tích và clustering
+Total_Purchases,Tổng số lần mua hàng qua các kênh,int64,Quantitative,Discrete,Biến dẫn xuất mô tả hành vi mua hàng
+Response,Khách hàng có phản hồi chiến dịch marketing cuối hay không,int64,Qualitative,Binary,Target chính cho bài toán classification

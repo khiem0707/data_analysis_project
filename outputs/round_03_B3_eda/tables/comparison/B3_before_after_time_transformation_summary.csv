@@ -1,0 +1,4 @@
+﻿Raw_Variable,Transformed_Variable,Transformation,Missing_Before,Missing_After,Mean_Before,Mean_After,Median_Before,Median_After,Std_Before,Std_After,Outliers_Before,Outliers_After
+cnt,cnt_interpolated,Nội suy mốc thời gian thiếu,0,0,189.46308763450142,187.88648540811673,142.0,140.0,181.38759909186473,181.27820090185634,505,513
+cnt,cnt_log1p,Log-transform để giảm lệch phải,0,0,189.46308763450142,4.5543264898604345,142.0,4.948759890378168,181.38759909186473,1.431223781624527,505,160
+cnt,cnt_diff_1,Differencing bậc 1 để phân tích biến động ngắn hạn,0,1,189.46308763450142,0.0018810921735165024,142.0,-4.0,181.38759909186473,100.89895251721903,505,2362

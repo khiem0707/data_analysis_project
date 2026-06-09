@@ -1,0 +1,57 @@
+C3 UrbanSound8K - Round 4 Audio Feature Extraction and EDA
+==========================================================================================
+Run time: 2026-06-08 22:32:36.189008
+Raw dir: data\raw\C3_urbansound8k
+Metadata path: data\raw\C3_urbansound8k\UrbanSound8K.csv
+Audio base dir: data\raw\C3_urbansound8k
+Round output directory: outputs\round_04_C3_audio_eda
+
+METADATA SUMMARY
+------------------------------------------------------------------------------------------
+Metadata rows: 8732
+Original metadata columns: slice_file_name, fsID, start, end, salience, fold, classID, class
+Existing audio files by metadata: 8732/8732
+
+FEATURE EXTRACTION SUMMARY
+------------------------------------------------------------------------------------------
+                Item  Value
+       Metadata rows   8732
+        Feature rows   8732
+   Feature status ok   8732
+Feature status error      0
+      Unique classes     10
+        Unique folds     10
+
+CLASS DISTRIBUTION FROM FEATURES
+------------------------------------------------------------------------------------------
+           class  Frequency  Relative_Frequency   Percent Mode_Of_Variable
+        dog_bark       1000            0.114521 11.452130  air_conditioner
+children_playing       1000            0.114521 11.452130  air_conditioner
+ air_conditioner       1000            0.114521 11.452130  air_conditioner
+    street_music       1000            0.114521 11.452130  air_conditioner
+      jackhammer       1000            0.114521 11.452130  air_conditioner
+   engine_idling       1000            0.114521 11.452130  air_conditioner
+        drilling       1000            0.114521 11.452130  air_conditioner
+           siren        929            0.106390 10.639029  air_conditioner
+        car_horn        429            0.049130  4.912964  air_conditioner
+        gun_shot        374            0.042831  4.283097  air_conditioner
+
+DATASET-LEVEL AUDIO FEATURE STATISTICS
+------------------------------------------------------------------------------------------
+               Variable  Count  Missing_Count        Mean      Median        Mode        Min          Max        Range     Variance  Standard_Deviation  CV_Percent  Q1_25_Percentile  Q2_50_Percentile  Q3_75_Percentile         IQR  Lower_Bound_IQR  Upper_Bound_IQR  Outlier_Count_IQR
+         duration_audio   8732              0    3.607522    4.000000    4.000000   0.050000     4.036647     3.986647 9.494437e-01            0.974394   27.010065          4.000000          4.000000          4.000000    0.000000         4.000000         4.000000               1407
+               rms_mean   8732              0    0.069614    0.051834    0.000176   0.000176     0.771243     0.771068 4.420530e-03            0.066487   95.508549          0.024116          0.051834          0.092457    0.068341        -0.078396         0.194969                447
+               zcr_mean   8732              0    0.070410    0.050503    0.039672   0.000606     0.631770     0.631164 4.265326e-03            0.065309   92.756292          0.032294          0.050503          0.081772    0.049478        -0.041923         0.155989                806
+ spectral_centroid_mean   8732              0 2839.990934 2348.069843  318.842932 318.842932 18673.860821 18355.017889 2.786399e+06         1669.250992   58.776631       1756.514845       2348.069843       3391.162460 1634.647616      -695.456579      5843.133884                557
+spectral_bandwidth_mean   8732              0 3326.327284 3154.964867  650.563685 650.563685 19421.575038 18771.011353 1.828388e+06         1352.179034   40.650812       2412.295564       3154.964867       4086.960648 1674.665083       -99.702061      6598.958273                123
+  spectral_rolloff_mean   8732              0 5417.982096 4449.665272 1138.326257 195.671281 44127.912783 43932.241502 1.171184e+07         3422.256138   63.164774       2998.204527       4449.665272       7092.725034 4094.520507     -3143.576233     13234.505794                245
+
+OUTPUT FILES
+------------------------------------------------------------------------------------------
+Audio features: outputs\round_04_C3_audio_eda\data\C3_audio_features.csv
+Dataset-level tables: outputs\round_04_C3_audio_eda\tables\dataset_level
+Class-level tables: outputs\round_04_C3_audio_eda\tables\class_level
+Quality-check tables: outputs\round_04_C3_audio_eda\tables\quality_check
+Dataset-level figures: outputs\round_04_C3_audio_eda\figures\dataset_level
+Class-level figures: outputs\round_04_C3_audio_eda\figures\class_level
+Waveform/spectrogram figures: outputs\round_04_C3_audio_eda\figures\waveform_spectrogram

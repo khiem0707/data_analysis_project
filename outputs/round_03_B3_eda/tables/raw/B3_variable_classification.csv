@@ -1,0 +1,19 @@
+﻿Variable,Meaning,Python_Data_Type,Variable_Nature,Subtype,Role
+instant,Mã thứ tự bản ghi,int64,Qualitative,Identifier,Không dùng như biến phân tích chính
+dteday,Ngày quan sát,datetime64[ns],Time,Date,Trục thời gian
+datetime,"Mốc thời gian theo giờ, tạo từ dteday và hr",datetime64[ns],Time,Datetime,Trục thời gian cho line chart và time-series split
+season,Mùa trong năm,int64,Qualitative,Ordinal encoded as integer,Biến giải thích mùa vụ
+yr,"Năm quan sát, 0 là 2011 và 1 là 2012",int64,Qualitative,Binary,Biến thời gian
+mnth,Tháng trong năm,int64,Qualitative,Ordinal,Biến mùa vụ
+hr,Giờ trong ngày,int64,Qualitative,Ordinal,Biến chu kỳ ngày
+holiday,Có phải ngày lễ hay không,int64,Qualitative,Binary,Biến lịch
+weekday,Thứ trong tuần,int64,Qualitative,Ordinal/Nominal,Biến chu kỳ tuần
+workingday,Có phải ngày làm việc hay không,int64,Qualitative,Binary,Biến lịch
+weathersit,Tình trạng thời tiết,int64,Qualitative,Ordinal,Biến thời tiết
+temp,Nhiệt độ chuẩn hóa,float64,Quantitative,Continuous,Biến định lượng phân tích chính
+atemp,Nhiệt độ cảm nhận chuẩn hóa,float64,Quantitative,Continuous,Biến định lượng phân tích chính
+hum,Độ ẩm chuẩn hóa,float64,Quantitative,Continuous,Biến thời tiết
+windspeed,Tốc độ gió chuẩn hóa,float64,Quantitative,Continuous,Biến thời tiết
+casual,Số lượt thuê xe của người dùng không đăng ký,int64,Quantitative,Discrete,Biến định lượng
+registered,Số lượt thuê xe của người dùng đã đăng ký,int64,Quantitative,Discrete,Biến định lượng
+cnt,Tổng số lượt thuê xe,int64,Quantitative,Discrete,Target chính cho hồi quy/forecasting

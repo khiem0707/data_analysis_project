@@ -1,0 +1,74 @@
+B3 Bike Sharing Dataset - Round 1 Data Audit
+============================================================
+Run time: 2026-06-01 23:01:32.236436
+Raw dir: data\raw\B3_bike_sharing
+day.csv path: data\raw\B3_bike_sharing\day.csv
+hour.csv path: data\raw\B3_bike_sharing\hour.csv
+
+DAY DATASET
+------------------------------------------------------------
+Shape: 731 rows, 16 columns
+Duplicate rows: 0
+Constant columns: []
+
+Missing values:
+    Column  Missing_Count  Missing_Rate
+   instant              0           0.0
+    dteday              0           0.0
+    season              0           0.0
+        yr              0           0.0
+      mnth              0           0.0
+   holiday              0           0.0
+   weekday              0           0.0
+workingday              0           0.0
+weathersit              0           0.0
+      temp              0           0.0
+     atemp              0           0.0
+       hum              0           0.0
+ windspeed              0           0.0
+    casual              0           0.0
+registered              0           0.0
+       cnt              0           0.0
+
+HOUR DATASET
+------------------------------------------------------------
+Shape: 17379 rows, 17 columns
+Duplicate rows: 0
+Constant columns: []
+
+Missing values:
+    Column  Missing_Count  Missing_Rate
+   instant              0           0.0
+    dteday              0           0.0
+    season              0           0.0
+        yr              0           0.0
+      mnth              0           0.0
+        hr              0           0.0
+   holiday              0           0.0
+   weekday              0           0.0
+workingday              0           0.0
+weathersit              0           0.0
+      temp              0           0.0
+     atemp              0           0.0
+       hum              0           0.0
+ windspeed              0           0.0
+    casual              0           0.0
+registered              0           0.0
+       cnt              0           0.0
+
+TIME RANGE
+------------------------------------------------------------
+Dataset Start_Date   End_Date  Number_Of_Unique_Days
+ B3_day 2011-01-01 2012-12-31                    731
+B3_hour 2011-01-01 2012-12-31                    731
+
+Target variable cnt summary from hour.csv
+------------------------------------------------------------
+count    17379.000000
+mean       189.463088
+std        181.387599
+min          1.000000
+25%         40.000000
+50%        142.000000
+75%        281.000000
+max        977.000000

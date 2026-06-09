@@ -1,0 +1,46 @@
+A3 Customer Personality Analysis - Round 1 Data Audit
+============================================================
+Run time: 2026-06-01 22:49:32.373860
+Raw path: data/raw/A3_customer_personality/marketing_campaign.csv
+Shape: 2240 rows, 29 columns
+Duplicate rows: 0
+
+Missing values:
+             Column  Missing_Count  Missing_Rate
+             Income             24      1.071429
+                 ID              0      0.000000
+         Year_Birth              0      0.000000
+          Education              0      0.000000
+     Marital_Status              0      0.000000
+            Kidhome              0      0.000000
+           Teenhome              0      0.000000
+        Dt_Customer              0      0.000000
+            Recency              0      0.000000
+           MntWines              0      0.000000
+          MntFruits              0      0.000000
+    MntMeatProducts              0      0.000000
+    MntFishProducts              0      0.000000
+   MntSweetProducts              0      0.000000
+       MntGoldProds              0      0.000000
+  NumDealsPurchases              0      0.000000
+    NumWebPurchases              0      0.000000
+NumCatalogPurchases              0      0.000000
+  NumStorePurchases              0      0.000000
+  NumWebVisitsMonth              0      0.000000
+       AcceptedCmp3              0      0.000000
+       AcceptedCmp4              0      0.000000
+       AcceptedCmp5              0      0.000000
+       AcceptedCmp1              0      0.000000
+       AcceptedCmp2              0      0.000000
+           Complain              0      0.000000
+      Z_CostContact              0      0.000000
+          Z_Revenue              0      0.000000
+           Response              0      0.000000
+
+Response distribution:
+ Response  Count  Rate_Percent
+        0   1906     85.089286
+        1    334     14.910714
+
+Constant columns:
+['Z_CostContact', 'Z_Revenue']
