@@ -4,6 +4,7 @@ import warnings
 import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
+import seaborn as sns
 
 from sklearn.compose import ColumnTransformer
 from sklearn.impute import SimpleImputer
@@ -199,24 +200,27 @@ def evaluate_model(model, X_train, X_test, y_train, y_test):
     Huấn luyện và đánh giá một mô hình.
     """
     model.fit(X_train, y_train)
-    y_pred = model.predict(X_test)
+    y_pred_train = model.predict(X_train)
+    y_pred_test = model.predict(X_test)
 
     metrics = {
-        "accuracy": accuracy_score(y_test, y_pred),
-        "precision_macro": precision_score(y_test, y_pred, average="macro", zero_division=0),
-        "recall_macro": recall_score(y_test, y_pred, average="macro", zero_division=0),
-        "f1_macro": f1_score(y_test, y_pred, average="macro", zero_division=0),
-        "precision_weighted": precision_score(y_test, y_pred, average="weighted", zero_division=0),
-        "recall_weighted": recall_score(y_test, y_pred, average="weighted", zero_division=0),
-        "f1_weighted": f1_score(y_test, y_pred, average="weighted", zero_division=0),
+        "train_accuracy": accuracy_score(y_train, y_pred_train),
+        "train_f1_macro": f1_score(y_train, y_pred_train, average="macro", zero_division=0),
+        "accuracy": accuracy_score(y_test, y_pred_test),
+        "precision_macro": precision_score(y_test, y_pred_test, average="macro", zero_division=0),
+        "recall_macro": recall_score(y_test, y_pred_test, average="macro", zero_division=0),
+        "f1_macro": f1_score(y_test, y_pred_test, average="macro", zero_division=0),
+        "precision_weighted": precision_score(y_test, y_pred_test, average="weighted", zero_division=0),
+        "recall_weighted": recall_score(y_test, y_pred_test, average="weighted", zero_division=0),
+        "f1_weighted": f1_score(y_test, y_pred_test, average="weighted", zero_division=0),
     }
 
-    return metrics, y_pred
+    return metrics, y_pred_test
 
 
 def plot_confusion_matrix(y_test, y_pred, target_name, model_name, output_path):
     """
-    Vẽ confusion matrix cho mô hình tốt nhất.
+    Vẽ confusion matrix cho mô hình tốt nhất với tỷ lệ %.
     """
     labels = sorted(pd.Series(y_test).astype(str).unique())
 
@@ -224,15 +228,25 @@ def plot_confusion_matrix(y_test, y_pred, target_name, model_name, output_path):
     y_pred_str = pd.Series(y_pred).astype(str)
 
     cm = confusion_matrix(y_test_str, y_pred_str, labels=labels)
+    cm_perc = cm / np.sum(cm) * 100
+    
+    annot = np.empty_like(cm).astype(str)
+    for i in range(cm.shape[0]):
+        for j in range(cm.shape[1]):
+            annot[i, j] = f"{cm[i, j]}\n({cm_perc[i, j]:.1f}%)"
 
-    fig, ax = plt.subplots(figsize=(8, 6))
-    disp = ConfusionMatrixDisplay(confusion_matrix=cm, display_labels=labels)
-    disp.plot(ax=ax, xticks_rotation=45, values_format="d", colorbar=False)
+    fig, ax = plt.subplots(figsize=(10, 8))
+    sns.heatmap(cm, annot=annot, fmt="", cmap="Blues", cbar=False,
+                xticklabels=labels, yticklabels=labels, ax=ax,
+                annot_kws={"size": 12})
 
-    ax.set_title(f"Confusion Matrix - {target_name} - {model_name}")
-    ax.set_xlabel("Predicted label")
-    ax.set_ylabel("True label")
+    ax.set_title(f"Confusion Matrix - {target_name} - {model_name}", fontsize=14)
+    ax.set_xlabel("Predicted label", fontsize=12)
+    ax.set_ylabel("True label", fontsize=12)
 
+    plt.xticks(rotation=45, ha='right')
+    plt.yticks(rotation=0)
+    
     plt.tight_layout()
     plt.savefig(output_path, dpi=300, bbox_inches="tight")
     plt.close()
@@ -252,6 +266,33 @@ def plot_f1_comparison(metrics_df: pd.DataFrame, output_path: Path):
     ax.legend(title="Model", bbox_to_anchor=(1.02, 1), loc="upper left")
 
     plt.xticks(rotation=0)
+    plt.tight_layout()
+    plt.savefig(output_path, dpi=300, bbox_inches="tight")
+    plt.close()
+
+def plot_train_test_comparison(metrics_df: pd.DataFrame, output_path: Path):
+    """
+    Vẽ biểu đồ so sánh F1-macro giữa Train và Test.
+    """
+    plot_df = metrics_df[['target', 'model', 'train_f1_macro', 'f1_macro']].copy()
+    plot_df.rename(columns={'train_f1_macro': 'Train', 'f1_macro': 'Test'}, inplace=True)
+    plot_df = plot_df.melt(id_vars=['target', 'model'], var_name='Phase', value_name='F1_Macro')
+    plot_df['Target_Model'] = plot_df['target'] + " - " + plot_df['model']
+    
+    fig, ax = plt.subplots(figsize=(12, 8))
+    sns.barplot(data=plot_df, x='Target_Model', y='F1_Macro', hue='Phase', palette=['#4c72b0', '#dd8452'])
+    
+    ax.set_title("So sánh hiệu năng (F1-macro) trên tập Train và Test", fontsize=16, fontweight='bold')
+    ax.set_xlabel("Target - Model", fontsize=12)
+    ax.set_ylabel("F1-macro", fontsize=12)
+    ax.set_ylim(0, 1.1)
+    
+    for p in ax.patches:
+        ax.annotate(f"{p.get_height():.2f}", (p.get_x() + p.get_width() / 2., p.get_height()), 
+                    ha='center', va='center', xytext=(0, 5), textcoords='offset points', fontsize=10)
+                    
+    plt.xticks(rotation=45, ha='right')
+    plt.legend(title="Tập dữ liệu", fontsize=11, title_fontsize=12)
     plt.tight_layout()
     plt.savefig(output_path, dpi=300, bbox_inches="tight")
     plt.close()
@@ -420,6 +461,13 @@ def main():
 
     plot_f1_comparison(metrics_df, f1_report_path)
     plot_f1_comparison(metrics_df, f1_output_path)
+    
+    # Hình so sánh Train vs Test
+    train_test_report_path = REPORT_IMG_DIR / "A3_CH4_train_test_comparison.png"
+    train_test_output_path = FIG_DIR / "A3_CH4_train_test_comparison.png"
+    
+    plot_train_test_comparison(metrics_df, train_test_report_path)
+    plot_train_test_comparison(metrics_df, train_test_output_path)
 
     print("\n" + "=" * 80)
     print("Hoàn tất A3 Classification")

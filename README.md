@@ -1,323 +1,335 @@
-# Data Analysis Report Project - README cập nhật sau Vòng 4
+# Data Analysis Report Project - README
 
-## 1. Trạng thái hiện tại
-
-Dự án đang đi theo 6 vòng đã chốt:
-
-1. **Vòng 1 - Chuẩn bị và kiểm kê dữ liệu A3, B3, C3**: Đã hoàn thành.
-2. **Vòng 2 - EDA cho A3 Customer Personality Analysis**: Đã hoàn thành.
-3. **Vòng 3 - EDA cho B3 Bike Sharing Dataset**: Đã hoàn thành.
-4. **Vòng 4 - Audio feature extraction và EDA cho C3 UrbanSound8K**: Đã hoàn thành.
-5. **Vòng 5 - Machine Learning**: Chuẩn bị thực hiện.
-6. **Vòng 6 - Tổng hợp báo cáo**: Chưa thực hiện.
+## 📋 Mục lục
+1. [Giới thiệu dự án](#giới-thiệu-dự-án)
+2. [Cấu trúc thư mục](#cấu-trúc-thư-mục)
+3. [Cài đặt môi trường](#cài-đặt-môi-trường)
+4. [Hướng dẫn chạy code](#hướng-dẫn-chạy-code)
+5. [Kiểm tra Requirements](#-kiểm-tra-requirements)
+6. [Xử lý lỗi thường gặp](#️-xử-lý-lỗi-thường-gặp)
+7. [Các lệnh hữu ích](#️-các-lệnh-hữu-ích)
+8. [Câu hỏi thường gặp](#-câu-hỏi-thường-gặp-faq)
+9. [Dữ liệu và kích thước](#-dữ-liệu-và-kích-thước)
+10. [Công nghệ sử dụng](#-công-nghệ-sử-dụng)
+11. [Liên hệ & Hỗ trợ](#-liên-hệ--hỗ-trợ)
 
 ---
 
-## 2. Cấu trúc output hiện tại
+## 🎯 Giới thiệu dự án
 
-```text
-outputs/
-|-- round_01_data_audit/
-|   |-- A3/
-|   |   |-- tables/
-|   |   |-- logs/
-|   |-- B3/
-|   |   |-- tables/
-|   |   |-- logs/
-|   |-- C3/
-|       |-- tables/
-|       |-- logs/
-|
-|-- round_02_A3_eda/
-|   |-- data/
-|   |-- figures/
-|   |   |-- raw/
-|   |   |-- cleaned/
-|   |-- logs/
-|   |-- tables/
-|       |-- raw/
-|       |-- cleaned/
-|       |-- comparison/
-|
-|-- round_03_B3_eda/
-|   |-- data/
-|   |-- figures/
-|   |   |-- raw/
-|   |   |-- transformed/
-|   |-- logs/
-|   |-- tables/
-|       |-- raw/
-|       |-- transformed/
-|       |-- comparison/
-|
-|-- round_04_C3_audio_eda/
-|   |-- data/
-|   |-- figures/
-|   |   |-- dataset_level/
-|   |   |-- class_level/
-|   |   |-- waveform_spectrogram/
-|   |-- logs/
-|   |-- tables/
-|       |-- dataset_level/
-|       |-- class_level/
-|       |-- quality_check/
+Dự án này thực hiện **phân tích dữ liệu toàn diện** trên 3 dataset lớn:
+- **A3**: Customer Personality Analysis (phân loại, clustering)
+- **B3**: Bike Sharing Dataset (dự báo chuỗi thời gian)
+- **C3**: UrbanSound8K (phân tích audio, clustering âm thanh)
+
+---
+
+## 📁 Cấu trúc thư mục
+
+```
+data_analysis_project/
+│
+├── data/                          # Chứa dữ liệu thô
+│   ├── raw/                       # Dữ liệu gốc chưa xử lý
+│   │   ├── A3_customer_personality/
+│   │   ├── B3_bike_sharing/
+│   │   └── C3_urbansound8k/
+│   └── processed/                 # Dữ liệu đã xử lý (để trống, chờ tạo)
+│
+├── notebooks/                     # Chứa các script Python chính
+│   ├── 01_A3_customer_personality_audit.py      # Kiểm kê A3
+│   ├── 01_A3_customer_personality_eda.py        # EDA A3
+│   ├── 02_B3_bike_sharing_audit.py              # Kiểm kê B3
+│   ├── 02_B3_bike_sharing_eda_timeseries.py     # EDA B3
+│   ├── 03_C3_urbansound8k_audit.py              # Kiểm kê C3
+│   ├── 03_C3_urbansound8k_feature_extraction_eda.py  # EDA C3
+│   ├── chapter4_A3_classification.py            # ML: phân loại A3
+│   ├── chapter4_A3_clustering.py                # ML: clustering A3
+│   ├── chapter4_B3_regression.py                # ML: hồi quy B3
+│   ├── chapter4_B3_clustering.py                # ML: clustering B3
+│   ├── chapter4_C3_clustering.py                # ML: clustering C3
+│   └── add_advanced_plots.py                    # Vẽ biểu đồ nâng cao
+│
+├── outputs/                       # Kết quả từ các script
+│   ├── round_01_data_audit/       # Kết quả kiểm kê A3, B3, C3
+│   ├── round_02_A3_eda/           # Dữ liệu, hình ảnh, bảng từ EDA A3
+│   ├── round_03_B3_eda/           # Dữ liệu, hình ảnh, bảng từ EDA B3
+│   ├── round_04_C3_audio_eda/     # Dữ liệu, hình ảnh, bảng từ EDA C3
+│   └── round_05_chapter4_ml/      # Kết quả ML, bảng metrics
+│
+├── images/                        # Chứa hình ảnh cho báo cáo
+│   ├── nhom-a-3/                  # Hình A3
+│   ├── nhom-b-3/                  # Hình B3
+│   └── nhom-c-3/                  # Hình C3
+│
+├── excel/                         # Tệp Excel tổng hợp (nếu có)
+│
+├── report_assets/                 # Tài liệu báo cáo
+│
+├── requirements.txt               # Danh sách thư viện cần cài
+└── README.md                      # File này
 ```
 
----
+**Giải thích từng thư mục chính:**
 
-## 3. Vòng 1 - Kết quả kiểm kê dữ liệu
-
-### 3.1. A3 - Customer Personality Analysis
-
-- Dữ liệu chính: `data/raw/A3_customer_personality/marketing_campaign.csv`
-- Số dòng: 2,240.
-- Số cột: 29.
-- Duplicate rows: 0.
-- Missing value: chỉ có `Income` thiếu 24 giá trị, tương ứng 1.071429%.
-- Target `Response`:
-  - `Response = 0`: 1,906 mẫu, tương ứng 85.089286%.
-  - `Response = 1`: 334 mẫu, tương ứng 14.910714%.
-- Cột hằng số:
-  - `Z_CostContact`
-  - `Z_Revenue`
-
-### 3.2. B3 - Bike Sharing Dataset
-
-- `day.csv`: 731 dòng, 16 cột.
-- `hour.csv`: 17,379 dòng, 17 cột.
-- Duplicate rows: 0.
-- Constant columns: không có.
-- Missing values: không có.
-- Date range: 2011-01-01 đến 2012-12-31.
-- Số ngày duy nhất: 731.
-- Biến mục tiêu `cnt` trong `hour.csv`:
-  - Count: 17,379
-  - Mean: 189.463088
-  - Std: 181.387599
-  - Min: 1
-  - Q1: 40
-  - Median: 142
-  - Q3: 281
-  - Max: 977
-
-### 3.3. C3 - UrbanSound8K
-
-- Metadata: 8,732 dòng.
-- File WAV tìm thấy: 8,732.
-- Tất cả metadata rows đều có file audio tương ứng.
-- Missing values: 0.
-- Duplicate theo `slice_file_name` và `fold`: 0.
-- Số lớp âm thanh: 10.
-- Lớp ít mẫu nhất:
-  - `gun_shot`: 374 mẫu.
-  - `car_horn`: 429 mẫu.
-- Duration metadata:
-  - Mean: 3.607904 giây.
-  - Std: 0.973570.
-  - Min: 0.054517.
-  - Q1/Median/Q3/Max: 4.0 giây.
+| Thư mục | Mục đích |
+|---------|---------|
+| `data/raw/` | Chứa dữ liệu gốc (CSV, WAV) không được sửa đổi |
+| `data/processed/` | Chứa dữ liệu đã làm sạch (hiện tại để trống) |
+| `notebooks/` | Chứa tất cả script Python thực hiện phân tích |
+| `outputs/` | Chứa kết quả sau khi chạy script (CSV, PNG, TXT logs) |
+| `images/` | Chứa hình ảnh được lưu từ outputs để tổng hợp báo cáo |
+| `excel/` | Tệp Excel tổng hợp kết quả (nếu có) |
+| `report_assets/` | Tài liệu báo cáo cuối cùng |
 
 ---
 
-## 4. Vòng 2 - EDA cho A3 Customer Personality Analysis
+## 🔧 Cài đặt môi trường
 
-### 4.1. Script đã chạy
+### Bước 1: Cài đặt Python (3.8+)
+Đảm bảo bạn đã cài đặt Python 3.8 trở lên. Kiểm tra:
+```bash
+python --version
+```
 
+### Bước 2: Tạo Virtual Environment (tuỳ chọn nhưng khuyến khích)
+```bash
+# Windows
+python -m venv venv
+venv\Scripts\activate
+
+# macOS/Linux
+python -m venv venv
+source venv/bin/activate
+```
+
+### Bước 3: Cài đặt các thư viện
+Cài đặt tất cả thư viện từ `requirements.txt`:
+```bash
+pip install -r requirements.txt
+```
+
+**Các thư viện chính:**
+- pandas, numpy: xử lý dữ liệu
+- matplotlib, seaborn: vẽ biểu đồ
+- scikit-learn: machine learning
+- librosa: xử lý audio
+- scipy: tính toán thống kê
+
+---
+
+## 🚀 Hướng dẫn chạy code
+
+### Thứ tự thực hiện (từng vòng):
+
+#### **Vòng 1: Kiểm kê dữ liệu** ✅ (Đã hoàn thành)
+```bash
+# Chạy kiểm kê A3
+python notebooks/01_A3_customer_personality_audit.py
+
+# Chạy kiểm kê B3
+python notebooks/02_B3_bike_sharing_audit.py
+
+# Chạy kiểm kê C3
+python notebooks/03_C3_urbansound8k_audit.py
+```
+**Kết quả:** Kiểm tra số dòng, cột, missing values, duplicates → Lưu vào `outputs/round_01_data_audit/`
+
+---
+
+#### **Vòng 2: EDA cho A3** ✅ (Đã hoàn thành)
 ```bash
 python notebooks/01_A3_customer_personality_eda.py
 ```
-
-### 4.2. Output chính
-
-```text
-outputs/round_02_A3_eda/
-|-- data/
-|   |-- A3_cleaned.csv
-|   |-- A3_cleaned_with_scaled_features.csv
-|-- logs/
-|   |-- A3_round2_eda_log.txt
-|-- tables/
-|   |-- raw/
-|   |-- cleaned/
-|   |-- comparison/
-|-- figures/
-|   |-- raw/
-|   |-- cleaned/
-```
-
-### 4.3. Kết quả chính
-
-- Raw shape sau khi tạo biến dẫn xuất: 2,240 dòng, 36 cột.
-- Missing `Income` trước xử lý: 24.
-- Median dùng để điền `Income`: 51,381.5.
-- Missing `Income` sau xử lý: 0.
-- Đã tạo các biến:
-  - `Age`
-  - `Customer_Tenure_Days`
-  - `Total_Spending`
-  - `Total_Children`
-  - `Total_Purchases`
-  - `Total_Accepted_Campaigns`
-- Đã gộp `Alone`, `Absurd`, `YOLO` trong `Marital_Status` thành `Other`.
-- Đã xóa các cột hằng số:
-  - `Z_CostContact`
-  - `Z_Revenue`
-- Đã làm mịn outliers theo quy tắc IQR.
-- Cleaned shape: 2,240 dòng, 35 cột.
+**Kết quả:** 
+- Dữ liệu làm sạch → `outputs/round_02_A3_eda/data/`
+- Biểu đồ EDA → `outputs/round_02_A3_eda/figures/`
+- Bảng thống kê → `outputs/round_02_A3_eda/tables/`
 
 ---
 
-## 5. Vòng 3 - EDA cho B3 Bike Sharing Dataset
-
-### 5.1. Script đã chạy
-
+#### **Vòng 3: EDA cho B3** ✅ (Đã hoàn thành)
 ```bash
 python notebooks/02_B3_bike_sharing_eda_timeseries.py
 ```
-
-### 5.2. Output chính
-
-```text
-outputs/round_03_B3_eda/
-|-- data/
-|   |-- B3_day_raw_with_datetime.csv
-|   |-- B3_hour_raw_with_datetime.csv
-|   |-- B3_hour_transformed_time_features.csv
-|   |-- B3_daily_aggregated_from_hour.csv
-|-- logs/
-|   |-- B3_round3_eda_log.txt
-|-- tables/
-|   |-- raw/
-|   |-- transformed/
-|   |-- comparison/
-|-- figures/
-|   |-- raw/
-|   |-- transformed/
-```
-
-### 5.3. Kết quả chính
-
-- `hour.csv` sau tạo `datetime`: 17,379 dòng, 18 cột.
-- Khoảng thời gian: 2011-01-01 00:00:00 đến 2012-12-31 23:00:00.
-- Missing values trong `hour.csv`: 0.
-- Duplicate rows trong `hour.csv`: 0.
-- Số bản ghi theo giờ kỳ vọng: 17,544.
-- Số bản ghi theo giờ quan sát được: 17,379.
-- Số mốc giờ bị thiếu: 165.
-- Transformed hourly shape: 17,544 dòng, 43 cột.
-- Missing `cnt_interpolated` sau xử lý: 0.
-
-### 5.4. Biến đổi chuỗi thời gian đã tạo
-
-- `datetime`
-- Full hourly reindex
-- Linear interpolation cho biến numeric
-- Forward/backward fill cho biến categorical
-- `cnt_log1p`
-- `cnt_diff_1`
-- `lag_1`
-- `lag_24`
-- `lag_168`
-- `rolling_mean_24`
-- `rolling_std_24`
-- `rolling_mean_168`
+**Kết quả:** 
+- Dữ liệu với time features → `outputs/round_03_B3_eda/data/`
+- Biểu đồ chuỗi thời gian → `outputs/round_03_B3_eda/figures/`
+- Bảng phân tích → `outputs/round_03_B3_eda/tables/`
 
 ---
 
-## 6. Vòng 4 - Audio feature extraction và EDA cho C3 UrbanSound8K
-
-### 6.1. Script đã chạy
-
+#### **Vòng 4: EDA cho C3 (Audio)** ✅ (Đã hoàn thành)
 ```bash
 python notebooks/03_C3_urbansound8k_feature_extraction_eda.py
 ```
-
-### 6.2. Output chính
-
-```text
-outputs/round_04_C3_audio_eda/
-|-- data/
-|   |-- C3_audio_features.csv
-|   |-- C3_metadata_with_audio_path.csv
-|-- logs/
-|   |-- C3_round4_audio_eda_log.txt
-|-- tables/
-|   |-- dataset_level/
-|   |-- class_level/
-|   |-- quality_check/
-|-- figures/
-|   |-- dataset_level/
-|   |-- class_level/
-|   |-- waveform_spectrogram/
-```
-
-### 6.3. Kết quả kiểm tra feature
-
-- Metadata rows: 8,732.
-- Feature rows: 8,732.
-- Feature status ok: 8,732.
-- Feature status error: 0.
-- Unique classes: 10.
-- Unique folds: 10.
-- Existing audio files by metadata: 8,732/8,732.
-
-### 6.4. Phân bố lớp từ file feature
-
-| Class | Count |
-|---|---:|
-| dog_bark | 1000 |
-| children_playing | 1000 |
-| air_conditioner | 1000 |
-| street_music | 1000 |
-| jackhammer | 1000 |
-| engine_idling | 1000 |
-| drilling | 1000 |
-| siren | 929 |
-| car_horn | 429 |
-| gun_shot | 374 |
-
-### 6.5. Thống kê feature âm thanh chính
-
-| Feature | Mean | Median | Std | Outliers IQR |
-|---|---:|---:|---:|---:|
-| duration_audio | 3.607522 | 4.000000 | 0.974394 | 1407 |
-| rms_mean | 0.069614 | 0.051834 | 0.066487 | 447 |
-| zcr_mean | 0.070410 | 0.050503 | 0.065309 | 806 |
-| spectral_centroid_mean | 2839.990934 | 2348.069843 | 1669.250992 | 557 |
-| spectral_bandwidth_mean | 3326.327284 | 3154.964867 | 1352.179034 | 123 |
-| spectral_rolloff_mean | 5417.982096 | 4449.665272 | 3422.256138 | 245 |
-
-### 6.6. Lưu ý khi diễn giải
-
-- `duration_audio` có Q1 = Median = Q3 = 4 giây, nên IQR = 0.
-- Vì vậy, các file có thời lượng khác 4 giây bị đánh dấu là outlier theo quy tắc IQR.
-- Điều này không nhất thiết là lỗi dữ liệu; nó cho thấy phần lớn file audio đã được chuẩn hóa quanh 4 giây, còn một số file ngắn hơn hoặc dài hơn nhẹ.
-- Các feature như `rms_mean`, `zcr_mean`, `spectral_centroid_mean` có CV cao, cho thấy dữ liệu âm thanh có mức biến động lớn giữa các lớp và giữa các file.
+**Kết quả:**
+- Feature audio → `outputs/round_04_C3_audio_eda/data/`
+- Biểu đồ waveform, spectrogram → `outputs/round_04_C3_audio_eda/figures/`
+- Bảng chất lượng audio → `outputs/round_04_C3_audio_eda/tables/`
 
 ---
 
-## 7. Bước tiếp theo
+#### **Vòng 5: Machine Learning** 🔄 (Đang thực hiện)
+Chạy các script ML theo thứ tự:
 
-Bước tiếp theo là **Vòng 5 - Machine Learning**.
+```bash
+# A3: Classification
+python notebooks/chapter4_A3_classification.py
 
-Vòng 5 sẽ gồm 3 phần lớn:
+# A3: Clustering
+python notebooks/chapter4_A3_clustering.py
 
-1. **A3 - Classification**
-   - Thực hiện ít nhất 3 target khác nhau:
-     - `Response`
-     - `Education`
-     - `Spending_Level`
-   - So sánh tối thiểu 2 thuật toán.
-   - Xuất confusion matrix, accuracy, precision, recall, F1-score.
+# B3: Regression
+python notebooks/chapter4_B3_regression.py
 
-2. **B3 - Regression / Forecasting**
-   - Dự đoán `cnt` theo đúng time-series split.
-   - Không dùng random split.
-   - So sánh Linear Regression, Random Forest Regressor, Gradient Boosting/XGBoost nếu có.
-   - Xuất MAE, RMSE, R2-score, actual vs prediction.
+# B3: Clustering
+python notebooks/chapter4_B3_clustering.py
 
-3. **A3/B3/C3 - Clustering**
-   - Chạy K-Means, Hierarchical Clustering, DBSCAN.
-   - Dùng Elbow Method/Silhouette Score.
-   - Đọc vị cụm bằng thống kê mô tả.
-   - Với C3 dùng feature audio đã trích xuất ở Vòng 4.
+# C3: Clustering
+python notebooks/chapter4_C3_clustering.py
+```
+**Kết quả:** Mô hình, metrics, biểu đồ → `outputs/round_05_chapter4_ml/`
+
+---
+
+#### **Vòng 6: Tổng hợp báo cáo** ⏳ (Chưa thực hiện)
+Tổng hợp tất cả kết quả vào báo cáo cuối cùng.
+
+---
+
+### ⚡ Chạy toàn bộ một lần (tùy chọn)
+```bash
+# Chạy tất cả script kiểm kê
+for script in notebooks/0*_*_audit.py; do python "$script"; done
+
+# Chạy tất cả script EDA
+for script in notebooks/0*_*_eda*.py; do python "$script"; done
+
+# Chạy tất cả script ML
+for script in notebooks/chapter4_*.py; do python "$script"; done
+```
+
+---
+
+## 📝 Kiểm tra Requirements
+
+### Kiểm tra thư viện đã cài chưa:
+```bash
+pip list | findstr pandas numpy matplotlib scikit-learn librosa
+```
+
+### Cài đặt hoặc cập nhật:
+```bash
+pip install -r requirements.txt --upgrade
+```
+
+### Gỡ cài đặt:
+```bash
+pip uninstall -y -r requirements.txt
+```
+
+---
+
+## ⚠️ Xử lý lỗi thường gặp
+
+| Lỗi | Nguyên nhân | Giải pháp |
+|-----|-----------|---------|
+| `ModuleNotFoundError: No module named 'pandas'` | Thư viện chưa cài | Chạy `pip install -r requirements.txt` |
+| `FileNotFoundError: data/raw/...` | Đường dẫn không tìm thấy | Kiểm tra file tồn tại trong `data/raw/` |
+| `MemoryError` | Dataset quá lớn, RAM không đủ | Giảm số dòng xử lý hoặc sử dụng `chunk` |
+| `Cannot read audio file` | File WAV bị lỗi hoặc không tồn tại | Kiểm tra file audio trong `C3_urbansound8k/fold*` |
+| `KeyError: column name` | Cột dữ liệu không tồn tại | Kiểm tra tên cột trong dữ liệu gốc |
+| `RuntimeWarning` | Cảnh báo từ thư viện | Có thể bỏ qua nếu script chạy xong |
+
+---
+
+## 🛠️ Các lệnh hữu ích
+
+### Xem dữ liệu nhanh:
+```bash
+# Xem 5 dòng đầu tiên
+python -c "import pandas as pd; print(pd.read_csv('data/raw/A3_customer_personality/marketing_campaign.csv').head())"
+```
+
+### Kiểm tra dung lượng thư mục:
+```bash
+# Windows PowerShell
+Get-ChildItem -Path "outputs" -Recurse | Measure-Object -Sum -Property Length
+
+# Windows CMD
+dir /s outputs
+```
+
+### Xóa tất cả output cũ (cẩn thận!):
+```bash
+# Windows PowerShell
+Remove-Item "outputs\*" -Recurse -Force
+
+# macOS/Linux
+rm -rf outputs/*
+```
+
+### Chạy script với log:
+```bash
+# Lưu output vào file log
+python notebooks/01_A3_customer_personality_eda.py > logs/A3_run.log 2>&1
+```
+
+---
+
+## ❓ Câu hỏi thường gặp (FAQ)
+
+**Q: Mình bắt đầu từ đâu?**
+A: Hãy làm theo "Hướng dẫn chạy code" từ Vòng 1 đến Vòng 5 theo thứ tự.
+
+**Q: Mình có thể chạy riêng từng vòng không?**
+A: Có, nhưng khuyến khích chạy theo thứ tự vì mỗi vòng phụ thuộc vào kết quả của vòng trước.
+
+**Q: Output nằm ở đâu?**
+A: Tất cả kết quả được lưu trong thư mục `outputs/` theo từng vòng (round_01, round_02, ...).
+
+**Q: Mình muốn xóa kết quả cũ và chạy lại?**
+A: Xóa thư mục `outputs/` và chạy lại script. Hoặc xóa riêng thư mục round cụ thể.
+
+**Q: Mất bao lâu để chạy hết?**
+A: Khoảng 10-30 phút tùy máy tính, đặc biệt là Vòng 5 (ML) chậm nhất.
+
+**Q: Mình có thể chỉnh sửa code không?**
+A: Hoàn toàn được, nhưng lưu ý là một số output có thể thay đổi hoặc không tạo ra.
+
+**Q: Làm sao biết script chạy xong?**
+A: Khi không có lỗi (error) và terminal trở về dòng nhập lệnh.
+
+---
+
+## 📊 Dữ liệu và kích thước
+
+| Dataset | Loại | Dòng | Cột | Dung lượng |
+|---------|------|------|-----|-----------|
+| A3 | CSV | 2,240 | 29 | ~500 KB |
+| B3 (day) | CSV | 731 | 16 | ~50 KB |
+| B3 (hour) | CSV | 17,379 | 17 | ~1 MB |
+| C3 | CSV + WAV | 8,732 | 10 | ~10 GB (tất cả file audio) |
+
+---
+
+## 🎓 Công nghệ sử dụng
+
+- **Python 3.8+**: Ngôn ngữ chính
+- **pandas**: Xử lý dữ liệu bảng (CSV)
+- **numpy**: Tính toán số học
+- **matplotlib & seaborn**: Vẽ biểu đồ
+- **scikit-learn**: Machine Learning
+- **librosa & soundfile**: Xử lý audio
+- **scipy**: Phân tích thống kê
+
+---
+
+## 📞 Liên hệ & Hỗ trợ
+
+Nếu gặp vấn đề, hãy:
+1. Kiểm tra lỗi trong mục "Xử lý lỗi thường gặp"
+2. Xem log output trong thư mục `outputs/round_*/logs/`
+3. Đảm bảo tất cả thư viện đã cài đúng: `pip install -r requirements.txt`
+4. Thử chạy lại script

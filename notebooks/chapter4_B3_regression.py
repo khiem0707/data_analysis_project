@@ -4,6 +4,7 @@ import warnings
 import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
+import seaborn as sns
 
 from sklearn.compose import ColumnTransformer
 from sklearn.impute import SimpleImputer
@@ -262,17 +263,25 @@ def plot_actual_vs_predicted(result_df: pd.DataFrame, model_name: str, output_pa
 
 def plot_metrics_comparison(metrics_df: pd.DataFrame, output_path: Path):
     """
-    Vẽ biểu đồ so sánh MAE và RMSE giữa các mô hình.
+    Vẽ biểu đồ so sánh MAE và RMSE giữa các mô hình (có Train vs Test).
     """
-    plot_df = metrics_df.set_index("model")[["MAE", "RMSE"]]
-
-    ax = plot_df.plot(kind="bar", figsize=(10, 6))
-    ax.set_title("B3 Regression - Error Metrics Comparison")
-    ax.set_xlabel("Model")
-    ax.set_ylabel("Error")
-    ax.legend(title="Metric")
-
-    plt.xticks(rotation=20, ha="right")
+    plot_df = metrics_df[['model', 'train_RMSE', 'RMSE', 'train_MAE', 'MAE']].copy()
+    plot_df.rename(columns={'train_RMSE': 'Train RMSE', 'RMSE': 'Test RMSE', 'train_MAE': 'Train MAE', 'MAE': 'Test MAE'}, inplace=True)
+    plot_df = plot_df.melt(id_vars='model', var_name='Metric_Phase', value_name='Error')
+    
+    fig, ax = plt.subplots(figsize=(12, 8))
+    sns.barplot(data=plot_df, x='model', y='Error', hue='Metric_Phase', ax=ax, palette="tab10")
+    
+    ax.set_title("B3 Regression - So sánh Sai số (RMSE, MAE) trên Train vs Test", fontsize=16, fontweight='bold')
+    ax.set_xlabel("Mô hình", fontsize=14)
+    ax.set_ylabel("Sai số (Error)", fontsize=14)
+    
+    for p in ax.patches:
+        ax.annotate(f"{p.get_height():.1f}", (p.get_x() + p.get_width() / 2., p.get_height()), 
+                    ha='center', va='center', xytext=(0, 5), textcoords='offset points', fontsize=10)
+    
+    plt.xticks(rotation=20, ha="right", fontsize=12)
+    plt.legend(title="Metric & Phase", fontsize=12, title_fontsize=13)
     plt.tight_layout()
     plt.savefig(output_path, dpi=300, bbox_inches="tight")
     plt.close()
@@ -280,17 +289,26 @@ def plot_metrics_comparison(metrics_df: pd.DataFrame, output_path: Path):
 
 def plot_r2_comparison(metrics_df: pd.DataFrame, output_path: Path):
     """
-    Vẽ biểu đồ so sánh R2 giữa các mô hình.
+    Vẽ biểu đồ so sánh R2 giữa Train và Test.
     """
-    fig, ax = plt.subplots(figsize=(8, 5))
+    plot_df = metrics_df[['model', 'train_R2', 'R2']].copy()
+    plot_df.rename(columns={'train_R2': 'Train', 'R2': 'Test'}, inplace=True)
+    plot_df = plot_df.melt(id_vars='model', var_name='Phase', value_name='R2')
+    
+    fig, ax = plt.subplots(figsize=(10, 6))
+    sns.barplot(data=plot_df, x='model', y='R2', hue='Phase', palette=['#4c72b0', '#dd8452'], ax=ax)
 
-    ax.bar(metrics_df["model"], metrics_df["R2"])
-    ax.set_title("B3 Regression - R2 Comparison")
-    ax.set_xlabel("Model")
-    ax.set_ylabel("R2-score")
-    ax.set_ylim(0, 1)
+    ax.set_title("B3 Regression - So sánh R2 (Train vs Test)", fontsize=16, fontweight='bold')
+    ax.set_xlabel("Mô hình", fontsize=14)
+    ax.set_ylabel("R2-score", fontsize=14)
+    ax.set_ylim(0, 1.1)
 
-    plt.xticks(rotation=20, ha="right")
+    for p in ax.patches:
+        ax.annotate(f"{p.get_height():.3f}", (p.get_x() + p.get_width() / 2., p.get_height()), 
+                    ha='center', va='center', xytext=(0, 5), textcoords='offset points', fontsize=11)
+                    
+    plt.xticks(rotation=20, ha="right", fontsize=12)
+    plt.legend(title="Tập dữ liệu", fontsize=12, title_fontsize=13)
     plt.tight_layout()
     plt.savefig(output_path, dpi=300, bbox_inches="tight")
     plt.close()
@@ -433,27 +451,33 @@ def main():
         )
 
         pipe.fit(X_train, y_train)
-        y_pred = pipe.predict(X_test)
+        y_pred_train = pipe.predict(X_train)
+        y_pred_test = pipe.predict(X_test)
 
         # Không để dự đoán âm
-        y_pred = np.clip(y_pred, 0, None)
+        y_pred_train = np.clip(y_pred_train, 0, None)
+        y_pred_test = np.clip(y_pred_test, 0, None)
 
-        metrics = evaluate_regression(y_test, y_pred)
+        train_metrics = evaluate_regression(y_train, y_pred_train)
+        test_metrics = evaluate_regression(y_test, y_pred_test)
 
-        print(f"  MAE : {metrics['MAE']:.3f}")
-        print(f"  RMSE: {metrics['RMSE']:.3f}")
-        print(f"  R2  : {metrics['R2']:.3f}")
+        print(f"  Test MAE : {test_metrics['MAE']:.3f}")
+        print(f"  Test RMSE: {test_metrics['RMSE']:.3f}")
+        print(f"  Test R2  : {test_metrics['R2']:.3f}")
 
         all_metrics.append({
             "model": model_name,
-            **metrics,
+            "train_MAE": train_metrics['MAE'],
+            "train_RMSE": train_metrics['RMSE'],
+            "train_R2": train_metrics['R2'],
+            **test_metrics,
         })
 
         result_df = pd.DataFrame({
             "datetime": test_df["datetime"].values,
             "actual": y_test.values,
-            "predicted": y_pred,
-            "residual": y_test.values - y_pred,
+            "predicted": y_pred_test,
+            "residual": y_test.values - y_pred_test,
         })
 
         prediction_outputs[model_name] = result_df

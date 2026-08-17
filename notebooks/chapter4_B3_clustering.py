@@ -4,6 +4,7 @@ import warnings
 import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
+import seaborn as sns
 
 from sklearn.cluster import KMeans, AgglomerativeClustering, DBSCAN
 from sklearn.compose import ColumnTransformer
@@ -476,12 +477,14 @@ def add_auto_interpretation(compact_profile: pd.DataFrame, cluster_col: str):
 # =========================================================
 
 def plot_elbow(k_result_df: pd.DataFrame, output_path: Path):
-    fig, ax = plt.subplots(figsize=(8, 5))
+    fig, ax = plt.subplots(figsize=(10, 6))
 
-    ax.plot(k_result_df["k"], k_result_df["inertia"], marker="o")
-    ax.set_title("B3 K-Means Elbow Method")
-    ax.set_xlabel("Number of clusters K")
-    ax.set_ylabel("Inertia")
+    sns.lineplot(data=k_result_df, x="k", y="inertia", marker="o", ax=ax, color="#4c72b0", linewidth=2, markersize=8)
+    
+    ax.set_title("B3 K-Means Elbow Method", fontsize=16, fontweight='bold')
+    ax.set_xlabel("Số lượng cụm (K)", fontsize=14)
+    ax.set_ylabel("Inertia", fontsize=14)
+    ax.grid(True, linestyle="--", alpha=0.7)
 
     plt.tight_layout()
     plt.savefig(output_path, dpi=300, bbox_inches="tight")
@@ -489,14 +492,16 @@ def plot_elbow(k_result_df: pd.DataFrame, output_path: Path):
 
 
 def plot_silhouette(k_result_df: pd.DataFrame, best_k: int, output_path: Path):
-    fig, ax = plt.subplots(figsize=(8, 5))
+    fig, ax = plt.subplots(figsize=(10, 6))
 
-    ax.plot(k_result_df["k"], k_result_df["silhouette"], marker="o")
-    ax.axvline(best_k, linestyle="--", label=f"Best K = {best_k}")
-    ax.set_title("B3 K-Means Silhouette Score")
-    ax.set_xlabel("Number of clusters K")
-    ax.set_ylabel("Silhouette score")
-    ax.legend()
+    sns.lineplot(data=k_result_df, x="k", y="silhouette", marker="o", ax=ax, color="#dd8452", linewidth=2, markersize=8)
+    ax.axvline(best_k, linestyle="--", color="red", label=f"Best K = {best_k}")
+    
+    ax.set_title("B3 K-Means Silhouette Score", fontsize=16, fontweight='bold')
+    ax.set_xlabel("Số lượng cụm (K)", fontsize=14)
+    ax.set_ylabel("Silhouette score", fontsize=14)
+    ax.legend(fontsize=12)
+    ax.grid(True, linestyle="--", alpha=0.7)
 
     plt.tight_layout()
     plt.savefig(output_path, dpi=300, bbox_inches="tight")
@@ -504,26 +509,29 @@ def plot_silhouette(k_result_df: pd.DataFrame, best_k: int, output_path: Path):
 
 
 def plot_pca_clusters(pca_df: pd.DataFrame, labels, title: str, output_path: Path):
-    fig, ax = plt.subplots(figsize=(8, 6))
+    fig, ax = plt.subplots(figsize=(12, 8))
 
-    scatter = ax.scatter(
-        pca_df["PC1"],
-        pca_df["PC2"],
-        c=labels,
-        s=10,
-        alpha=0.70,
+    unique_labels = np.unique(labels)
+    palette = sns.color_palette("Set2", n_colors=len(unique_labels))
+    
+    sns.scatterplot(
+        data=pca_df,
+        x="PC1",
+        y="PC2",
+        hue=labels,
+        palette=palette,
+        s=20,
+        alpha=0.6,
+        ax=ax,
+        legend="full"
     )
 
-    ax.set_title(title)
-    ax.set_xlabel("PC1")
-    ax.set_ylabel("PC2")
+    ax.set_title(title, fontsize=16, fontweight='bold')
+    ax.set_xlabel("Principal Component 1 (PC1)", fontsize=14)
+    ax.set_ylabel("Principal Component 2 (PC2)", fontsize=14)
 
-    legend = ax.legend(
-        *scatter.legend_elements(),
-        title="Cluster",
-        loc="best"
-    )
-    ax.add_artist(legend)
+    ax.legend(title="Cụm (Cluster)", title_fontsize=13, fontsize=12, loc="best")
+    ax.grid(True, linestyle="--", alpha=0.5)
 
     plt.tight_layout()
     plt.savefig(output_path, dpi=300, bbox_inches="tight")
@@ -547,29 +555,32 @@ def plot_cluster_size(labels, output_path: Path):
 
 
 def plot_cluster_hour_profile(df_model: pd.DataFrame, labels, output_path: Path):
-    """
-    Vẽ cnt trung bình theo giờ và cụm.
-    """
     temp_df = df_model.copy()
     temp_df["cluster"] = labels
 
-    hour_profile = (
-        temp_df
-        .groupby(["cluster", "hr"])["cnt"]
-        .mean()
-        .reset_index()
+    fig, ax = plt.subplots(figsize=(12, 7))
+
+    sns.lineplot(
+        data=temp_df,
+        x="hr",
+        y="cnt",
+        hue="cluster",
+        palette="Set2",
+        marker="o",
+        linewidth=2.5,
+        markersize=8,
+        ax=ax
     )
 
-    fig, ax = plt.subplots(figsize=(10, 6))
-
-    for cluster_id in sorted(hour_profile["cluster"].unique()):
-        sub = hour_profile[hour_profile["cluster"] == cluster_id]
-        ax.plot(sub["hr"], sub["cnt"], marker="o", label=f"Cluster {cluster_id}")
-
-    ax.set_title("B3 Average cnt by Hour and Cluster")
-    ax.set_xlabel("Hour")
-    ax.set_ylabel("Average cnt")
-    ax.legend(title="Cluster")
+    ax.set_title("B3: Mức Nhu cầu Thuê xe (cnt) Trung bình theo Giờ và Cụm", fontsize=16, fontweight='bold')
+    ax.set_xlabel("Giờ trong ngày (0 - 23h)", fontsize=14)
+    ax.set_ylabel("Số lượt thuê xe trung bình", fontsize=14)
+    
+    # Tick mỗi giờ
+    ax.set_xticks(range(0, 24))
+    
+    ax.legend(title="Cụm (Cluster)", title_fontsize=13, fontsize=12, loc="upper left")
+    ax.grid(True, linestyle="--", alpha=0.7)
 
     plt.tight_layout()
     plt.savefig(output_path, dpi=300, bbox_inches="tight")
